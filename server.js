@@ -39,5 +39,5 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Мессенджер Dani запущен! Откройте http://localhost:${PORT}`);
+    console.log(`Мессенджер Dani запущен на порту ${PORT}`);
 });
