@@ -114,3 +114,40 @@ socket.on('hide_typing', () => {
         indicator.textContent = '';
     }
 });
+// 1. Получение и обновление списка онлайн-пользователей
+socket.on('update_online_users', (users) => {
+    const onlineDiv = document.getElementById('online-users-list');
+    if (onlineDiv) {
+        onlineDiv.textContent = `Онлайн (${users.length}): ` + users.join(', ');
+    }
+});
+
+// 2. Отслеживание ввода текста в поле сообщения
+const messageInput = document.getElementById('message-input'); // замените на ID вашего поля ввода, если он другой
+let typingTimeout;
+
+if (messageInput) {
+    messageInput.addEventListener('input', () => {
+        socket.emit('typing', myUsername); // отправляем сигнал, что мы печатаем
+        
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            socket.emit('stop_typing'); // если перестали писать на 1 секунду
+        }, 1000);
+    });
+}
+
+// 3. Отображение чужого статуса «печатает...»
+socket.on('display_typing', (username) => {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.textContent = `${username} печатает...`;
+    }
+});
+
+socket.on('hide_typing', () => {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.textContent = '';
+    }
+});
