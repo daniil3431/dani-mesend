@@ -1,6 +1,11 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00a884">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dani — Мессенджер</title>
@@ -312,5 +317,14 @@
                 .replace(/'/g, "'");
         }
     </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then((reg) => console.log('Service Worker зарегистрирован!', reg.scope))
+        .catch((err) => console.log('Ошибка регистрации Service Worker:', err));
+    });
+  }
+</script>
 </body>
 </html>
