@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dani вЂ” РњРµСЃСЃРµРЅРґР¶РµСЂ</title>
+    <title>Dani — Мессенджер</title>
     <style>
         :root {
             --primary-green: #2e7d32;
@@ -167,29 +167,29 @@
 <body>
 
     <div class="container">
-        <!-- Р­РєСЂР°РЅ РІС…РѕРґР° -->
+        <!-- Экран входа -->
         <div id="auth-screen" class="screen">
-            <h1>рџЊї Dani Messenger</h1>
-            <p>Р’РІРµРґРёС‚Рµ РєРѕРґ РґРѕСЃС‚СѓРїР° РёР· Р±РµР»РѕРіРѕ СЃРїРёСЃРєР° Рё РІР°С€Рµ РёРјСЏ</p>
-            <input type="text" id="username-input" class="auth-input" placeholder="Р’Р°С€Рµ РёРјСЏ" style="margin-bottom: 12px;" />
-            <input type="password" id="code-input" class="auth-input" placeholder="РљРѕРґ Р±РµР»РѕРіРѕ СЃРїРёСЃРєР° (DANI2026)" />
-            <button class="btn" onclick="tryLogin()">Р’РѕР№С‚Рё РІ С‡Р°С‚</button>
+            <h1>🌿 Dani Messenger</h1>
+            <p>Введите код доступа из белого списка и ваше имя</p>
+            <input type="text" id="username-input" class="auth-input" placeholder="Ваше имя" style="margin-bottom: 12px;" />
+            <input type="password" id="code-input" class="auth-input" placeholder="Код белого списка (DANI2026)" />
+            <button class="btn" onclick="tryLogin()">Войти в чат</button>
             <div id="auth-error" class="error-msg"></div>
         </div>
 
-        <!-- Р­РєСЂР°РЅ С‡Р°С‚Р° -->
+        <!-- Экран чата -->
         <div id="chat-screen" class="screen hidden">
             <div class="chat-header">
-                <h2>рџЊї Dani</h2>
-                <span id="online-users-list" style="font-size: 13px;">РћРЅР»Р°Р№РЅ: 0</span>
+                <h2>🌿 Dani</h2>
+                <span id="online-users-list" style="font-size: 13px;">Онлайн: 0</span>
             </div>
             <div id="typing-indicator" style="font-size: 12px; font-style: italic; color: #558b2f; padding: 4px 16px 0; min-height: 16px;"></div>
             <div id="chat-messages"></div>
             <div class="chat-input-area">
                 <input type="file" id="file-input" accept="image/*" onchange="sendImage(event)">
-                <button class="file-upload-btn" onclick="document.getElementById('file-input').click()">рџ“·</button>
-                <input type="text" id="message-input" class="chat-input-text" placeholder="РЎРѕРѕР±С‰РµРЅРёРµ..." onkeypress="if(event.key==='Enter')sendMessage()">
-                <button class="send-btn" onclick="sendMessage()">вћ¤</button>
+                <button class="file-upload-btn" onclick="document.getElementById('file-input').click()">📷</button>
+                <input type="text" id="message-input" class="chat-input-text" placeholder="Сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+                <button class="send-btn" onclick="sendMessage()">➤</button>
             </div>
         </div>
     </div>
@@ -205,7 +205,7 @@
             const errorDiv = document.getElementById('auth-error');
 
             if (!username) {
-                errorDiv.innerText = 'Р’РІРµРґРёС‚Рµ РІР°С€Рµ РёРјСЏ!';
+                errorDiv.innerText = 'Введите ваше имя!';
                 return;
             }
             myUsername = username;
@@ -217,19 +217,19 @@
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('chat-screen').classList.remove('hidden');
             } else {
-                document.getElementById('auth-error').innerText = data.message || 'РќРµРІРµСЂРЅС‹Р№ РєРѕРґ Р±РµР»РѕРіРѕ СЃРїРёСЃРєР°!';
+                document.getElementById('auth-error').innerText = data.message || 'Неверный код белого списка!';
             }
         });
 
-        // РЎРїРёСЃРѕРє С‚РµС…, РєС‚Рѕ СЃРµР№С‡Р°СЃ РѕРЅР»Р°Р№РЅ
+        // Список тех, кто сейчас онлайн
         socket.on('update_online_users', (users) => {
             const onlineSpan = document.getElementById('online-users-list');
             if (onlineSpan) {
-                onlineSpan.textContent = `РћРЅР»Р°Р№РЅ (${users.length}): ` + users.join(', ');
+                onlineSpan.textContent = `Онлайн (${users.length}): ` + users.join(', ');
             }
         });
 
-        // РРЅРґРёРєР°С‚РѕСЂ "РїРµС‡Р°С‚Р°РµС‚..."
+        // Индикатор "печатает..."
         const messageInput = document.getElementById('message-input');
         let typingTimeout;
 
@@ -245,7 +245,7 @@
         socket.on('display_typing', (username) => {
             const indicator = document.getElementById('typing-indicator');
             if (indicator) {
-                indicator.textContent = `${username} РїРµС‡Р°С‚Р°РµС‚...`;
+                indicator.textContent = `${username} печатает...`;
             }
         });
 
