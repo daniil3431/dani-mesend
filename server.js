@@ -80,3 +80,37 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Сервер мессенджера Dani запущен на порту ${PORT}`);
 });
+socket.emit('auth_check', { code: 'DANI2026', username: myUsername });
+socket.on('update_online_users', (users) => {
+    // users — массив имен тех, кто сейчас в сети
+    const onlineDiv = document.getElementById('online-users-list');
+    if (onlineDiv) {
+        onlineDiv.innerHTML = `Онлайн (${users.length}): ` + users.join(', ');
+    }
+});
+const messageInput = document.getElementById('message-input');
+let typingTimeout;
+
+messageInput.addEventListener('input', () => {
+    socket.emit('typing', myUsername);
+    
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => {
+        socket.emit('stop_typing');
+    }, 1000); // если не писал 1 секунду, убираем статус
+});
+
+// Получение статуса от других
+socket.on('display_typing', (username) => {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.textContent = `${username} печатает...`;
+    }
+});
+
+socket.on('hide_typing', () => {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.textContent = '';
+    }
+});
