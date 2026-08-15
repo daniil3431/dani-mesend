@@ -2,6 +2,21 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<!-- Подключение манифеста -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#007bff">
+
+<!-- Регистрация Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered!', reg))
+        .catch(err => console.log('SW registration failed:', err));
+    });
+  }
+</script>
+
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00a884">
 <meta name="apple-mobile-web-app-capable" content="yes">
