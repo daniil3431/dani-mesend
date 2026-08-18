@@ -1,0 +1,12 @@
+{
+  "appId": "com.dani.messenger",
+  "appName": "Dani Messenger",
+  "webDir": "public",
+  "server": {
+    "url": "https://REPLACE-WITH-YOUR-RAILWAY-URL.up.railway.app",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}
